@@ -70,7 +70,7 @@ namespace todo_api_week11.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreateTodoDto createTodoDto)
+        public IActionResult CreateTodo(CreateTodoDto createTodoDto)
         {
             if (!ModelState.IsValid)
             {
