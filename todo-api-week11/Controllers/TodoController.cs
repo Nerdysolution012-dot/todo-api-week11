@@ -97,7 +97,7 @@ namespace todo_api_week11.Controllers
                 DueDate = newTodo.DueDate,
                 Priority = newTodo.Priority
             };
-            return CreatedAtAction(nameof(GetById), new { id = newTodo.Id }, todoResponse);
+            return CreatedAtAction(nameof(GetTodoById), new { id = newTodo.Id }, todoResponse);
 
 
 
