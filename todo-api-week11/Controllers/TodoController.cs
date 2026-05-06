@@ -20,7 +20,7 @@ namespace todo_api_week11.Controllers
 
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAllTods()
         {
             var todos = _todos.Select(todo => new TodoResponseDto
             {
@@ -38,7 +38,7 @@ namespace todo_api_week11.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetTodoById(int id)
         {
             if (id <= 0)
             {
