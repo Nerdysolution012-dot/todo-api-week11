@@ -1,0 +1,202 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "TodoAPI",
+    "description": "Postman collection for the Enhanced TODO API (Week 11 assignment). Set the `baseUrl` variable to `http://localhost:5000`.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. GET all TODOs (empty list)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/todos",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "todos"]
+        },
+        "description": "Returns an empty array when no TODOs exist."
+      },
+      "response": []
+    },
+    {
+      "name": "2. POST create TODO (valid)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Complete assignment\",\n  \"description\": \"Finish Week 11 TODO API\",\n  \"dueDate\": \"2099-03-20T10:00:00Z\",\n  \"priority\": \"High\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/todos",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "todos"]
+        },
+        "description": "Creates a new TODO item. Returns 201 Created with a Location header."
+      },
+      "response": []
+    },
+    {
+      "name": "3. POST create TODO (invalid - missing title)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"description\": \"No title provided\",\n  \"priority\": \"Low\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/todos",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "todos"]
+        },
+        "description": "Returns 400 Bad Request with validation errors because Title is required."
+      },
+      "response": []
+    },
+    {
+      "name": "4. POST create TODO (invalid - past due date)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Past due todo\",\n  \"dueDate\": \"2000-01-01T00:00:00Z\",\n  \"priority\": \"Medium\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/todos",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "todos"]
+        },
+        "description": "Returns 400 Bad Request because DueDate is in the past."
+      },
+      "response": []
+    },
+    {
+      "name": "5. GET single TODO (exists)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/todos/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "todos", "1"]
+        },
+        "description": "Returns the TODO with id=1 (created in request #2)."
+      },
+      "response": []
+    },
+    {
+      "name": "6. GET single TODO (doesn't exist - 404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/todos/9999",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "todos", "9999"]
+        },
+        "description": "Returns 404 Not Found because no TODO with id=9999 exists."
+      },
+      "response": []
+    },
+    {
+      "name": "7. PUT update TODO (valid)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Updated assignment\",\n  \"description\": \"Updated description\",\n  \"isCompleted\": true,\n  \"dueDate\": \"2099-04-01T10:00:00Z\",\n  \"priority\": \"Medium\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/todos/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "todos", "1"]
+        },
+        "description": "Updates the TODO with id=1. Returns 200 OK with the updated item."
+      },
+      "response": []
+    },
+    {
+      "name": "8. PUT update TODO (invalid - title too short)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"AB\",\n  \"isCompleted\": false,\n  \"priority\": \"Low\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/todos/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "todos", "1"]
+        },
+        "description": "Returns 400 Bad Request because Title is too short (min 3 characters)."
+      },
+      "response": []
+    },
+    {
+      "name": "9. DELETE TODO",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/todos/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "todos", "1"]
+        },
+        "description": "Deletes the TODO with id=1. Returns 204 No Content."
+      },
+      "response": []
+    },
+    {
+      "name": "10. DELETE TODO (not found - 404)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/todos/9999",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "todos", "9999"]
+        },
+        "description": "Returns 404 Not Found because id=9999 does not exist."
+      },
+      "response": []
+    }
+  ]
+}
